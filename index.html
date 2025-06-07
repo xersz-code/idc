@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chat Real-time</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  #messages { list-style-type: none; padding: 0; max-height: 300px; overflow-y: scroll; border: 1px solid #ccc; }
+  #messages li { padding: 5px 10px; border-bottom: 1px solid #eee; }
+  #chat-form { margin-top: 10px; }
+  #input-msg { width: 80%; padding: 10px; font-size: 1em; }
+  #send-btn { padding: 10px 15px; font-size: 1em; }
+</style>
+</head>
+<body>
+
+<h2>Chat Real-time dengan Socket.IO</h2>
+<ul id="messages"></ul>
+
+<form id="chat-form" action="">
+  <input id="input-msg" autocomplete="off" placeholder="Ketik pesan..." /><button id="send-btn">Kirim</button>
+</form>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io();
+
+  const form = document.getElementById('chat-form');
+  const input = document.getElementById('input-msg');
+  const messages = document.getElementById('messages');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value.trim() === '') return;
+    socket.emit('chat message', input.value);
+    input.value = '';
+  });
+
+  socket.on('chat message', (msg) => {
+    const li = document.createElement('li');
+    li.textContent = msg;
+    messages.appendChild(li);
+    messages.scrollTop = messages.scrollHeight;
+  });
+</script>
+
+</body>
+</html>
