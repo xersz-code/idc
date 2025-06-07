@@ -1,39 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Real-Time Chat App</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cozy Chat App</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
   <div id="login-container">
-    <h2>Login</h2>
-    <input type="email" id="email" placeholder="Email">
-    <input type="password" id="password" placeholder="Password">
+    <h2>Login / Register</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
     <button onclick="login()">Login</button>
     <button onclick="register()">Register</button>
   </div>
 
   <div id="chat-container" class="hidden">
-    <h2>Welcome, <span id="user-name"></span></h2>
+    <h2>Welcome, <span id="user-name"></span>!</h2>
+    <button onclick="logout()">Logout</button>
+    <br /><br />
+    <label>Room: </label>
     <select id="room-selector" onchange="changeRoom()">
-      <option value="general"># General</option>
-      <option value="games"># Games</option>
-      <option value="random"># Random</option>
+      <option value="general">General</option>
+      <option value="random">Random</option>
     </select>
     <ul id="messages"></ul>
-    <form id="chat-form" onsubmit="sendMessage(event)">
-      <input type="text" id="message" placeholder="Type a message...">
+    <form onsubmit="sendMessage(event)">
+      <input id="message" type="text" placeholder="Type a message..." />
       <button type="submit">Send</button>
     </form>
-    <button onclick="logout()">Logout</button>
   </div>
 
-  <!-- Firebase SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  
   <script src="firebase-config.js"></script>
   <script src="script.js"></script>
 </body>

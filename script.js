@@ -36,11 +36,13 @@ function changeRoom() {
 }
 
 function listenMessages() {
+  console.log("Listening to room:", currentRoom);
   const messagesList = document.getElementById("messages");
   messagesList.innerHTML = "";
   db.ref("rooms/" + currentRoom).off();
   db.ref("rooms/" + currentRoom).on("child_added", snapshot => {
     const msg = snapshot.val();
+    console.log("New message received:", msg);
     const li = document.createElement("li");
     li.textContent = `${msg.sender}: ${msg.text}`;
     messagesList.appendChild(li);
