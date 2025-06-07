@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Real-Time Chat App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="login-container">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <button onclick="register()">Register</button>
+  </div>
+
+  <div id="chat-container" class="hidden">
+    <h2>Welcome, <span id="user-name"></span></h2>
+    <select id="room-selector" onchange="changeRoom()">
+      <option value="general"># General</option>
+      <option value="games"># Games</option>
+      <option value="random"># Random</option>
+    </select>
+    <ul id="messages"></ul>
+    <form id="chat-form" onsubmit="sendMessage(event)">
+      <input type="text" id="message" placeholder="Type a message...">
+      <button type="submit">Send</button>
+    </form>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  
+  <script src="firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
