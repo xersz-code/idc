@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transaksi Generator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0f172a;
+      color: white;
+      padding: 20px;
+    }
+    .card {
+      background-color: #1e40af;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      max-width: 400px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+    .emoji-label {
+      font-size: 1.1em;
+      margin: 6px 0;
+    }
+    .input-form {
+      display: flex;
+      flex-direction: column;
+      max-width: 400px;
+    }
+    input {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #1d4ed8;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #copyBtn {
+      display: none;
+      background-color: #22c55e;
+    }
+    #waBtn {
+      display: none;
+      background-color: #25D366;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>🛒 Transaksi Generator</h2>
+  <div class="input-form">
+    <input type="text" id="produk" placeholder="Nama Produk...">
+    <input type="number" id="harga" placeholder="Harga (tanpa Rp dan titik)...">
+    <button onclick="generateCard()">Generate</button>
+    <button id="copyBtn" onclick="copyText()">📋 Copy Teks</button>
+    <button id="waBtn" onclick="forwardWA()">📲 Forward ke WhatsApp</button>
+  </div>
+
+  <div id="output"></div>
+
+  <script>
+    let finalText = '';
+
+    function generateCard() {
+      const produk = document.getElementById('produk').value.trim();
+      const harga = document.getElementById('harga').value.trim();
+      const today = new Date();
+      const tanggal = today.toLocaleDateString('id-ID');
+
+      if (!produk || !harga) {
+        alert("Isi dulu produknya sama harganya, yaa!");
+        return;
+      }
+
+      const hargaBersih = `Rp${harga}`;
+
+      const cardHTML = `
+        <div class="card">
+          <h3>📦 TRANSAKSI SELESAI</h3>
+          <p class="emoji-label">🏷️ <strong>Produk:</strong> ${produk}</p>
+          <p class="emoji-label">💸 <strong>Harga:</strong> ${hargaBersih}</p>
+          <p class="emoji-label">📅 <strong>Tanggal:</strong> ${tanggal}</p>
+          <p class="emoji-label">📌 <strong>Status:</strong> Selesai ✅</p>
+        </div>
+      `;
+
+      finalText =
+`Transaksi Selesai
+JANLUP MASUK SALURAN
+https://whatsapp.com/channel/0029Vb6TPiiHwXb4zJ0kZE0d
+
+📦 TRANSAKSI SELESAI
+🏷️ Produk: ${produk}
+💸 Harga: ${hargaBersih}
+📅 Tanggal: ${tanggal}
+📌 Status: Selesai ✅`;
+
+      document.getElementById('output').innerHTML = cardHTML;
+      document.getElementById('copyBtn').style.display = 'block';
+      document.getElementById('waBtn').style.display = 'block';
+    }
+
+    function copyText() {
+      navigator.clipboard.writeText(finalText).then(() => {
+        alert("🫡 Copied! Tinggal paste ke WhatsApp/Telegram");
+      }).catch(err => {
+        alert("Gagal copy 😢 Coba manual ya");
+      });
+    }
+
+    function forwardWA() {
+      const encoded = encodeURIComponent(finalText);
+      const waURL = `https://wa.me/?text=${encoded}`;
+      window.open(waURL, '_blank');
+    }
+  </script>
+
+</body>
+</html>
